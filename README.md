@@ -63,7 +63,7 @@
 ### flop ratio and Percentage of flop ratio
 
 ###### flop ratio = 1613 / 14876 = 0.1084296
-###### percentage of flop ratio = 0.1084296 * 100 = 10.84296
+###### percentage of flop ratio = 0.1084296 * 100 = 10.84296 %
 
 ### Synthesis result file view 
 ![Screenshot 2024-09-20 145351](https://github.com/user-attachments/assets/8dc3eca7-b648-410b-b75e-834c8ae46409)
