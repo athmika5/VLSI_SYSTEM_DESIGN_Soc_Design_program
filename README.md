@@ -45,3 +45,25 @@
 ![Screenshot 2024-09-20 142336](https://github.com/user-attachments/assets/42b86b5d-f65a-4e59-9e26-06c437f64520)
 
 ![Screenshot 2024-09-20 143755](https://github.com/user-attachments/assets/6a49391e-a8f4-407e-adb0-322a99693e2a)
+
+### 2.Calulate the flop ratio with reference to number of dflipflop and number of cells 
+
+### Chip Area for the module - 'picorv32a'
+
+![Screenshot 2024-09-20 144231](https://github.com/user-attachments/assets/b19ac39c-9538-4b78-949d-cc2a1dfa2c10)
+
+### Number of D flip-flop
+
+![Screenshot 2024-09-20 144527](https://github.com/user-attachments/assets/854fd101-9300-4d04-b8af-325b344c8b32)
+
+### Number of cells 
+
+![Screenshot 2024-09-20 144645](https://github.com/user-attachments/assets/40f79759-b810-4056-9ec7-0c7618894cd2)
+
+### flop ratio and Percentage of flop ratio
+
+###### flop ratio = 1613 / 14876 = 0.1084296
+###### percentage of flop ratio = 0.1084296 * 100 = 10.84296
+
+### Synthesis result file view 
+![Screenshot 2024-09-20 145351](https://github.com/user-attachments/assets/8dc3eca7-b648-410b-b75e-834c8ae46409)
