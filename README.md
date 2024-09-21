@@ -71,7 +71,7 @@
 # Session 2: Good Floorplan vs Bad Floorplan and Introduction to Library cells
 
 ## Theory:
-
+[Session2_Theory.docx](https://github.com/user-attachments/files/17085508/Session2_Theory.docx)
 
 ## Implementation:
 
