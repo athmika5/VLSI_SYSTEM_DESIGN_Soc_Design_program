@@ -300,3 +300,50 @@
 ###### Rise transition time = 2.24647 - 2.1824 = 0.06407
 
 ### fall transition calculation
+###### Rise transition time = Time taken for the output to fall to 20% - time taken for output to fall to 80%
+###### 20% of output = 660mV
+###### 80% of output = 2.64V
+
+### Screenshot of 20% of output
+![Screenshot 2024-09-23 003326](https://github.com/user-attachments/assets/c489bab8-367e-4360-b0b4-76c8e947d322)
+
+### Screenshot of 80% of output
+![Screenshot 2024-09-23 003432](https://github.com/user-attachments/assets/17232d97-cf74-42b8-be0b-8c0ceb99e2b1)
+
+###### fall transition time = 4.094-2.244
+![Screenshot 2024-09-23 003514](https://github.com/user-attachments/assets/2bea1d5a-2ca3-418f-a9ef-0638cca0ede9)
+
+### Rise Cell Delay Calculatuion
+
+###### Rise Cell Delay = time taken for a output to rise to 50% - time taken for a input to fall to 50%
+###### 50% of 3.3V = 1.65V
+### Screenshot of 50% rise output
+![Screenshot 2024-09-23 003801](https://github.com/user-attachments/assets/06d62bb6-c1dc-4c36-aaad-71d0afd8470c)
+![Screenshot 2024-09-23 003917](https://github.com/user-attachments/assets/ab0cdca6-e2fe-421e-b00a-abde904345af)
+
+###### Rise Cell Delay = 2.21-2.14 = 0.07
+
+### Fall cell delay Calculation
+
+###### Fall cell delay = time taken for a output to fall to 50% - time taken for a input to rise to 50%
+
+### Screenshot of 50% output fall
+![Screenshot 2024-09-23 004106](https://github.com/user-attachments/assets/3a52c68c-642a-499a-9992-e40ed13b303d)
+![Screenshot 2024-09-23 004143](https://github.com/user-attachments/assets/c5981aee-4b44-4429-b18f-f68e06db96da)
+
+###### Fall cell delay = 4.077-4.05 = 0.027
+
+### 6. Find problem in the DRC section of the old magic tech file for the skywater process and fix them
+
+#### Link to Sky130 Periphery rules:
+###### https://skywater-pdk.readthedocs.io/en/main/rules/periphery.html
+
+##### Commands to download and view the corrupted skywater process magic tech files and associated files to perform drc corrections
+
+###### change the home directory
+###### cd
+
+###### Command to download the lab files
+###### wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
+
+###### Command to 
