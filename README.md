@@ -1,4 +1,4 @@
-# Session 1: Inception of open source EDA, OpenLANE and Sky130 PDK
+![Screenshot 2024-09-22 235708](https://github.com/user-attachments/assets/9e78d731-ce26-4c95-b4a4-274db36ac33c)# Session 1: Inception of open source EDA, OpenLANE and Sky130 PDK
 
 # Theory:
 [DIGITAL VLSI SOC DESIGN AND PLANNING_theory.docx](https://github.com/user-attachments/files/17077752/DIGITAL.VLSI.SOC.DESIGN.AND.PLANNING_theory.docx)
@@ -185,3 +185,118 @@
 ### Screenshot of Standard cell placement in the core area
 ![Screenshot 2024-09-21 182820](https://github.com/user-attachments/assets/1e4bc3e0-0b04-4c84-8e99-c58dbfc52d41)
 
+# Session 3: Design Library Cell using Magic Layout and ngspice characterization
+
+# Implimentation
+## Task 3
+
+### 1. Clone custom inverter standard cell design from github repository: Standard cell design and characterization using OpenLANE flow
+### 2. Load the custom inverter layout in the magic and explore.
+### 3. Spice extraction of inverter in the magic.
+### 4. Editing the spice model file for analysis through simulation.
+### 5. Post-layout ngspice simulation.
+### 6. Find problem in the DRC section of the old magic tech file for the skywater process and fix them
+
+### 1. Clone custom inverter standard cell design from github repository: Standard cell design and characterization using OpenLANE flow
+
+#### Change directory to openlane
+###### cd Desktop/work/tools/openlane_working_dir/openlane
+
+#### Clone the github repository with custom inverter design
+###### git clone https://github.com/nickson-jose/vsdstdcelldesign
+
+#### Change into the repository direction
+###### cd vsdstdcelldesign
+
+#### Copy magic tech file to the repository direction, for the easy access
+###### cp sky130A.tech /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+
+#### Check conents to view the tech file
+###### ls -ltr
+
+#### Command to open custom inverter layout in magic
+###### magic -T sky130A.tech sky_130_inv.mag &
+
+### Screenshot of these commands
+![Screenshot 2024-09-22 151340](https://github.com/user-attachments/assets/33998846-9237-4f75-b493-31384c44f37f)
+
+![Screenshot 2024-09-22 151924](https://github.com/user-attachments/assets/418d91f7-dae1-44a4-89ef-f5c5f6b202df)
+
+![Screenshot 2024-09-22 152236](https://github.com/user-attachments/assets/fb087e47-cbfc-4545-878c-1c835a1b7d98)
+
+### 2. Load the custom inverter layout in the magic and explore.
+
+#### Screenshot of custom inverter layout in magic
+![Screenshot 2024-09-22 152409](https://github.com/user-attachments/assets/dbedc16b-b340-4f06-a8f7-fbd9df2fa339)
+
+#### NMOS and PMOS identified 
+![Screenshot 2024-09-22 202533](https://github.com/user-attachments/assets/83b89a70-4b45-43fb-8545-f92709dace6d)
+
+#### By double clicking on the box, we can view where it is connected.
+#### Screenshot of Nmos source connecting to Ground
+
+![Screenshot 2024-09-22 203034](https://github.com/user-attachments/assets/ba4d0765-8e52-482f-91dc-21304b085184)
+
+### 3. Spice extraction of inverter in the magic.
+
+#### Commands for spice extraction of the custom inverter layout in tkcon window of magic
+
+#### Check the current directory
+###### pwd
+
+#### Extraction command to extract to .ext format
+###### extract all
+
+#### Before converting ext to spice this command enables the parasitic extraction also
+###### ext2spice cthresh 0 rthresh 0
+
+#### Converting to .ext to .spice
+###### ext2spice
+
+### Screenshot of tkcon window after running above commands
+![Screenshot 2024-09-22 215712](https://github.com/user-attachments/assets/0d4fe0ed-ff5f-4b11-9fc4-c80a690a0ddf)
+
+![Screenshot 2024-09-22 233604](https://github.com/user-attachments/assets/3e67d650-19fc-44a5-acfe-e72c532c8562)
+
+#### Screenshot of created spice file
+![Screenshot 2024-09-22 220251](https://github.com/user-attachments/assets/2ad1ed2e-3d28-4bab-873b-32c3b97c5d67)
+
+### 4. Editing the spice model file for analysis through simulation.
+
+#### Final edited spice file ready for ngspice simulation
+
+![Screenshot 2024-09-22 235935](https://github.com/user-attachments/assets/acd5567c-8978-4d15-8003-d2fcd9da6f77)
+
+### 5. Post-layout ngspice simulation.
+
+#### Commands for ngspice simulation
+
+#### Command to directly load spice file ngspice sky130_inv.spice
+###### ngspice sky130_inv.spice
+
+#### Load the plot
+###### plot y vs time a
+
+### Screenshots of ngspice run
+![Screenshot 2024-09-22 221835](https://github.com/user-attachments/assets/5cc60ef1-23a2-4fe3-87cd-5407b2da58fc)
+
+![Screenshot 2024-09-22 235708](https://github.com/user-attachments/assets/33dce9db-174e-4ef0-ac53-710a53b9709b)
+
+### Generated plot
+![Screenshot 2024-09-23 000029](https://github.com/user-attachments/assets/4a375332-19d4-47ac-a22b-aed33a496c86)
+
+### Rise transition calculation
+
+###### Rise transition time = Time taken for the output to rise to 80% - time taken for output to rise to 20%
+###### 20% of output = 660mV
+###### 80% of output = 2.64V
+
+### Screenshot of 20% screenshot
+![Screenshot 2024-09-23 002048](https://github.com/user-attachments/assets/2d2e0a22-812d-4d01-88fe-8a9d3346abd1)
+
+### Screenshot of 80% screenshot
+![Screenshot 2024-09-23 003214](https://github.com/user-attachments/assets/0b018410-d51c-4893-ad16-619e820d1efe)
+
+###### Rise transition time = 2.24647 - 2.1824 = 0.06407
+
+### fall transition calculation
