@@ -1,4 +1,4 @@
-![Screenshot 2024-09-22 235708](https://github.com/user-attachments/assets/9e78d731-ce26-4c95-b4a4-274db36ac33c)# Session 1: Inception of open source EDA, OpenLANE and Sky130 PDK
+# Session 1: Inception of open source EDA, OpenLANE and Sky130 PDK
 
 # Theory:
 [DIGITAL VLSI SOC DESIGN AND PLANNING_theory.docx](https://github.com/user-attachments/files/17077752/DIGITAL.VLSI.SOC.DESIGN.AND.PLANNING_theory.docx)
@@ -346,4 +346,69 @@
 ###### Command to download the lab files
 ###### wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
 
-###### Command to 
+###### Command to extract drc_tests
+###### tar xfz drc_tests.tgz
+
+###### Change directory into the lab folder
+###### cd drc_tests
+
+###### List all files and directories present in the current directory
+###### ls -al
+
+###### Command to view .magicrc file
+###### gvim .magicrc
+
+###### command to open magic tool in better graphics
+###### magic -d XR &
+
+###### Screenshot command use
+![Screenshot 2024-09-23 013324](https://github.com/user-attachments/assets/93015db5-97d7-4f63-9d14-297e534d890e)
+![Screenshot 2024-09-23 013447](https://github.com/user-attachments/assets/4b64ef78-9cf8-4e05-bf51-7af7e4b1d6c1)
+
+#### Screenshot of .magicrc file
+![Screenshot 2024-09-23 013524](https://github.com/user-attachments/assets/ea57da71-d200-478f-916b-9c2c14e56937)
+
+#### Loading met3 file to magic and observe rule violation
+
+![Screenshot 2024-09-23 014353](https://github.com/user-attachments/assets/f8b58099-ae1b-49f4-876e-f94484e71b15)
+
+#### Command to Check DRC error in tkcon
+###### drc why
+
+#### To check width height of metal in tkcon
+###### box
+### Screenshot of commands
+![Screenshot 2024-09-23 014753](https://github.com/user-attachments/assets/d89d21a5-7bb8-4bd1-a854-b3a4caea3cd6)
+![Screenshot 2024-09-23 015310](https://github.com/user-attachments/assets/848eca19-ce1c-4970-9a2d-f4c05cadcb2c)
+
+### Incorrectly implimented poly.9 simple rule correction
+
+#### Load poly file 
+![Screenshot 2024-09-23 015445](https://github.com/user-attachments/assets/390aab04-a5b5-48f7-8229-f6c42992b697)
+
+### Incorrectly implimented poly.9 rule no drc violation even though spacing <0.48
+![Screenshot 2024-09-23 015500](https://github.com/user-attachments/assets/5e4d99d2-e6b4-406c-9518-73c22818a1d9)
+
+![Screenshot 2024-09-23 015823](https://github.com/user-attachments/assets/9a521ecd-8e95-4387-a438-768f87c33d40)
+
+![Screenshot 2024-09-23 015800](https://github.com/user-attachments/assets/b4ffe69f-d065-4e6b-a44f-39e0abf318d6)
+
+#### New commands inserted in sky130A.tech file to update drc
+![Screenshot 2024-09-23 021104](https://github.com/user-attachments/assets/3ac9dcf6-771d-457a-b6bb-86d311311787)
+
+### Commands to run in tkcon window
+
+#### Loading updated tech file
+###### tech load sky130.tech
+
+#### Re-Run DRC 
+###### drc check
+
+#### selecting region displaying the new erros and getting the error message
+###### drc why
+![Screenshot 2024-09-23 015800](https://github.com/user-attachments/assets/60c1b9d7-5e23-4556-955c-52e3fea9b04b)
+
+#### Load Metal contact file to magic and check the violations
+
+#### Screenshot
+![Screenshot 2024-09-23 022844](https://github.com/user-attachments/assets/dff4ee95-58b9-4326-b78c-5c33f71ea2ae)
