@@ -448,7 +448,7 @@
 #### Open custom inverter layout in magic
 ###### magic -T sky130A.tech sky130_inv.mag &
 
-### Screenshot of tracks.info
+### Screenshot of tracks.info of sky130_fd_sc_hd
 ![Screenshot 2024-09-24 192231](https://github.com/user-attachments/assets/da9075c6-e5c5-44f0-bd2c-edd8fc72fba9)
 
 ![Screenshot 2024-09-24 192913](https://github.com/user-attachments/assets/e895cd18-fec7-46ba-8a5c-cfdd95fa80fb)
@@ -460,7 +460,154 @@
 #### Set grid values accordingly
 ###### grid 0.46um 0.34um 0.23um 0.17um
 
-#### Screens
+#### Screenshot of tkcon commands
 ![Screenshot 2024-09-24 193424](https://github.com/user-attachments/assets/7045ea7e-44d0-47b1-895e-aadb8b315eb6)
 
-#### Condition verified
+#### Condition 1 verified
+![Screenshot 2024-09-24 193709](https://github.com/user-attachments/assets/868b1516-688b-40cc-b0ed-84cb4d9b3d05)
+
+#### Condition 2 verified
+![Screenshot 2024-09-24 195840](https://github.com/user-attachments/assets/1b61c6d0-69cd-4aaa-9db6-6f62587487ad)
+
+#### Condition 3 verified
+![Screenshot 2024-09-24 193448](https://github.com/user-attachments/assets/cb4a5dbb-3f9c-4a94-bdc6-9b4690ec7ff7)
+
+### 2. Save the finalized layout with custom name and open it.
+
+#### Command to save the layout with custom name in tkcon
+###### save sky130_vsdinv.mag
+![Screenshot 2024-09-24 201404](https://github.com/user-attachments/assets/478815d0-e39c-4d8f-96b0-3ebe410a1fcc)
+
+#### Command to open custom inverter layout in magic
+###### magic -T sky130A.tech sky130_vsdinv.mag &
+![Screenshot 2024-09-24 201618](https://github.com/user-attachments/assets/dba83381-40c7-4378-9d94-17d164132119)
+
+#### Screenshot of custom inverter layout
+![Screenshot 2024-09-24 201541](https://github.com/user-attachments/assets/82bd4d9d-6f3b-4ea4-8283-954b8dc555e0)
+
+### 3. Generate lef from the layout.
+
+#### Command to write lef in tkcon 
+###### left write
+
+#### Screenshot of command
+![Screenshot 2024-09-24 201710](https://github.com/user-attachments/assets/4ece704b-e87b-448c-b3a1-c1e5239134a0)
+
+#### Screenshot of newly created lef file
+![Screenshot 2024-09-24 201943](https://github.com/user-attachments/assets/f99cafd7-d909-498b-8dcb-c4315b3ed1a1)
+
+### 4. Copy the newly generated lef and associated required lib files to 'picorv32a' design 'src' directory.
+
+#### Copy lef file
+###### cp sky130_vsdinv.lef /Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+#### Check whether it's copied or not
+###### ls /Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+#### Copy lib files
+###### cp libs/sky130_fd_sc_hd__* /Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+#### Check whether it's copied or not
+###### ls /Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+### Screenshot of command
+![Screenshot 2024-09-24 214502](https://github.com/user-attachments/assets/c3166ad3-5e4f-4275-bde6-c0d63df2e6c9)
+
+![Screenshot 2024-09-24 214618](https://github.com/user-attachments/assets/6529cc52-c0dc-437f-b8f2-734bf25bb7ad)
+
+### 5. Edit 'config.tcl' to change lib file and add the new extra lef into the openlane flow.
+
+#### Commands to be added to config.tcl to include our custom cells in the openlane flow
+
+###### set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+###### set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
+###### set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
+###### set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+
+###### set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
+
+### Edited Config.tcl to include the added lef and change library to ones we added in src directory
+![Screenshot 2024-09-24 223500](https://github.com/user-attachments/assets/829a6a6e-e33f-40fd-9c24-7a54839ed37c)
+
+### 6. Run openlane flow synthesis with newly inserted custom inverter cell.
+
+### Commands to invoke the OpenLANE flow include new lef and perform synthesis
+
+#### Open the Openlane flow directory
+###### cd /Desktop/work/tools/openlane_working_dir/openlane/
+
+#### Invoke the OpenLANE flow docker sub-system 
+###### docker
+
+#### Invoke the OpenLANE flow in the Interactive mode using the following command
+###### ./flow.tcl -interactive
+
+#### prep the design creating some necessary files and directories for running a specific design which in our case is 'picorv32a'
+###### prep -design picorv32a
+
+#### Additional commands to include newly added lef to openlane flow
+###### set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+###### add_lefs -src $lefs
+
+#### Run Synthesis using following command
+###### run_synthesis
+
+![Screenshot 2024-09-24 223434](https://github.com/user-attachments/assets/97a45a6e-d03b-4e2d-b566-c8a222e07a39)
+
+![Screenshot 2024-09-25 115129](https://github.com/user-attachments/assets/28b69bb2-b8dd-42dd-9a39-43d572454f65)
+
+![Screenshot 2024-09-24 223543](https://github.com/user-attachments/assets/0b7b7e2a-c115-49a3-b767-01fde91dddfb)
+
+![Screenshot 2024-09-24 224636](https://github.com/user-attachments/assets/9ebc5f27-7901-4c90-ae7a-16bee9760591)
+
+### 7. Remove/reduce the newly introduced violations with the introduction of custom inverter cell by modifying design parameters.
+
+#### Noting down current design values generated before modifying parameters to improve timing
+
+![Screenshot 2024-09-25 121451](https://github.com/user-attachments/assets/5da004f1-e7c4-45d1-b8b6-b30fa9c744a1)
+
+![Screenshot 2024-09-25 122100](https://github.com/user-attachments/assets/731d59c9-ed98-4e10-8724-4aa596f016fa)
+
+### Commands to view and change parameters to improve timing and run synthesis
+
+#### prep design again to update variables
+###### prep -design picorv32a -tag 22-09_06-18 -overwrite
+
+#### Additional commands to include newly added lef to openlane flow merged.lef
+###### set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+###### add_lefs -src $lefs
+
+#### Command to display current value of SYNTH_STRATEGY
+###### echo $::env(SYNTH_STRATEGY)
+
+#### Command to set new value for SYNTH_STRATEGY
+###### set ::env(SYNTH_STRATEGY) "DELAY 3"
+
+#### Command to display current value of SYNTH_BUFFERING to check whether its enabled
+###### echo $:: env(SYNTH_BUFFERING)
+
+#### Command to display current value of SYNTH_SIZING
+###### echo $::env(SYNTH_SIZING)
+
+#### Command to set a new value to SYNTH_SIZING
+###### set ::env(SYNTH_SIZING) 1
+
+#### Command to display currennt value of variable SYNTH_DRIVING_CELL to check whether it's the proper cell or not
+###### echo $::env(SYNTH_DRIVING_CELL)
+
+#### Command to Run synthesis
+###### run_synthesis
+
+### Screenshot of merged.lef in tmp directory with our custom inverter as macro
+![Screenshot 2024-09-25 131939](https://github.com/user-attachments/assets/bbab66e8-1540-4079-96c4-6070470ce4fb)
+
+### Screenshot of Commands
+![Screenshot 2024-09-25 130930](https://github.com/user-attachments/assets/518263c0-4f50-40e5-a1b4-c688e636d8c3)
+
+![Screenshot 2024-09-25 131057](https://github.com/user-attachments/assets/ab1d1324-cf9d-43dc-933b-af4de7345a7d)
+
+![Screenshot 2024-09-25 131127](https://github.com/user-attachments/assets/7b22d945-5b96-4b95-bf24-8ddd3b981852)
+
+#### Comaparing the previous run values, area has increased and worst negative slock has become 0
+
+### 8. Once synthesis has accepted our custom inverter we can now run floorplan and placement and verify the cell is accepted in PnR flow.
