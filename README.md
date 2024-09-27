@@ -412,3 +412,55 @@
 
 #### Screenshot
 ![Screenshot 2024-09-23 022844](https://github.com/user-attachments/assets/dff4ee95-58b9-4326-b78c-5c33f71ea2ae)
+
+
+# Section 4: Pre-layout timing analysis and importance of good clock tree
+
+## Implementation
+
+## Task: 4
+### 1. Fix up small DRC errors and verify the design is ready to be inserted into our flow
+### 2. Save the finalized layout with custom name and open it.
+### 3. Generate lef from the layout.
+### 4. Copy the newly generated lef and associated required lib files to 'picorv32a' design 'src' directory.
+### 5. Edit 'config.tcl' to change lib file and add the new extra lef into the openlane flow.
+### 6. Run openlane flow synthesis with newly inserted custom inverter cell.
+### 7. Remove/reduce the newly introduced violations with the introduction of custom inverter cell by modifying design parameters.
+### 8. Once synthesis has accepted our custom inverter we can now run floorplan and placement and verify the cell is accepted in PnR flow.
+### 9. Do Post-Synthesis timing analysis with OpenSTA tool.
+### 10. Make timing ECO fixes to remove all violations.
+### 11. Replace the old netlist with the new netlist generated after timing ECO fix and implement the floorplan, placement and cts.
+### 12. Post-CTS OpenROAD timing analysis.
+### 13. Explore post-CTS OpenROAD timing analysis by removing 'sky130_fd_sc_hd__clkbuf_1' cell from clock buffer list variable 'CTS_CLK_BUFFER_LIST'.
+
+## 1. Fix up small DRC errors and verify the design is ready to be inserted into our flow
+
+### Conditions to be checked in the custom designed cell layout:
+
+#### Condition 1: The input and output ports of the standard cell should lie on the intersection of the vertical and horizontal tracks
+#### Condition 2: Width of the standard cell should be odd multiples of the horizontal track pitch.
+#### Condition 3: Height of the standard cell should be even multiples of the vertical track pitch.
+
+### Commands to open the custom inverter layout
+
+#### open the vsdstdcelldesign directory
+###### cd Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+#### Open custom inverter layout in magic
+###### magic -T sky130A.tech sky130_inv.mag &
+
+### Screenshot of tracks.info
+![Screenshot 2024-09-24 192231](https://github.com/user-attachments/assets/da9075c6-e5c5-44f0-bd2c-edd8fc72fba9)
+
+![Screenshot 2024-09-24 192913](https://github.com/user-attachments/assets/e895cd18-fec7-46ba-8a5c-cfdd95fa80fb)
+
+### Commands for tkcon window to set grid as tracks of locali layer
+
+#### Get syntax for grid command
+###### help grid
+#### Set grid values accordingly
+###### grid 0.46um 0.34um 0.23um 0.17um
+
+#### Screens
+![Screenshot 2024-09-24 193424](https://github.com/user-attachments/assets/7045ea7e-44d0-47b1-895e-aadb8b315eb6)
+
+#### Condition verified
