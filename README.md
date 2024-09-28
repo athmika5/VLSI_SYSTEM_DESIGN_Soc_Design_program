@@ -1,4 +1,4 @@
-![Screenshot 2024-09-26 005610](https://github.com/user-attachments/assets/47d5c020-72b7-4771-a75e-765f366aa3aa)# Session 1: Inception of open source EDA, OpenLANE and Sky130 PDK
+# Session 1: Inception of open source EDA, OpenLANE and Sky130 PDK
 
 # Theory:
 [DIGITAL VLSI SOC DESIGN AND PLANNING_theory.docx](https://github.com/user-attachments/files/17077752/DIGITAL.VLSI.SOC.DESIGN.AND.PLANNING_theory.docx)
