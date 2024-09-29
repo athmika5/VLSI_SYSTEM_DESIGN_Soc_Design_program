@@ -1049,3 +1049,192 @@
 
 ![Screenshot 2024-09-27 005643](https://github.com/user-attachments/assets/b00cec88-340e-4ada-9adf-cb3d6c7fe938)
 
+# Session 5: Final steps for RTL2GDS using tritonRoute and openSTA 
+
+## Implementation
+
+### Task 5:
+
+#### 1. Perform generation of Power Distribution Network (PDN) and explore the PDN layout.
+#### 2. Perfrom detailed routing using TritonRoute.
+#### 3. Post-Route parasitic extraction using SPEF extractor.
+#### 4. Post-Route OpenSTA timing analysis with the extracted parasitics of the route.
+
+### 1. Perform generation of Power Distribution Network (PDN) and explore the PDN layout.
+
+### Commands to perform from opening openlane till running cts and generating pdn
+
+#### Open the openlane directory
+###### cd /Desktop/work/tools/openlane_working_dir/openlane
+
+#### Invoke the OpenLANE flow docker sub-system 
+###### docker
+
+#### Invoke the OpenLANE flow in the Interactive mode using the following command
+###### ./flow.tcl -interactive
+
+#### Feed the required packages for the proper functionality of the OpenLANE flow
+###### package require openlane 0.9
+
+#### prep the design creating some necessary files and directories for running a specific design which in our case is 'picorv32a'
+###### prep -design picorv32a
+
+#### Additional commands to include newly added lef to openlane flow
+###### set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+###### add_lefs -src $lefs
+
+#### Command to set new value for SYNTH_STRATEGY
+###### set ::env(SYNTH_STRATEGY) "DELAY 3"
+
+#### Command to set a new value to SYNTH_SIZING
+###### set ::env(SYNTH_SIZING) 1
+
+#### Command to Run synthesis
+###### run_synthesis
+
+#### Following commands are alltogether sourced in "run_floorplan" command
+###### init_floorplan
+###### place_io
+###### tap_decap_or
+
+#### Now floorplan id done, run Placement
+###### run_placement
+
+#### Run CTS
+###### run_cts
+
+#### After CTS, generate power distribution network
+###### gen_pdn
+
+### Screenshots
+![Screenshot 2024-09-28 222644](https://github.com/user-attachments/assets/15da5dac-8fb0-42aa-81ba-8f285f45d0ee)
+
+![Screenshot 2024-09-28 222705](https://github.com/user-attachments/assets/d1f74d43-1683-4db2-bbf2-dd1804cc3582)
+
+### Commands to load pdn def into magic tool 
+
+#### Open the directory that contains generated PDN def
+###### cd /Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/28-09_16-46/tmp/floorplan/
+
+#### Command to load PDN def into magic tool
+###### magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read 14-pdn.def &
+
+### Screenshots
+![Screenshot 2024-09-28 223216](https://github.com/user-attachments/assets/50b6d5c0-463b-4230-803d-50ffbd30c57a)
+
+![Screenshot 2024-09-28 223240](https://github.com/user-attachments/assets/7f008b0f-09a5-42ab-b0f1-0a12188a1aa5)
+
+![Screenshot 2024-09-28 223335](https://github.com/user-attachments/assets/5be039a0-fb8d-4c07-9660-d9a3fa0bf7d5)
+
+![Screenshot 2024-09-28 223357](https://github.com/user-attachments/assets/404805de-9e7c-4644-a45a-10e817db0249)
+
+### 2. Perfrom detailed routing using TritonRoute.
+
+### Commands to perform routing
+
+#### Current def value check
+###### echo $::env(CURRENT_DEF)
+
+#### check the value of ROUTING_STRATEGY
+###### echo $::env(ROUTING_STRATEGY)
+
+#### Command for detailed route using TritonRoute
+###### run_routing
+
+### Screenshots
+
+![Screenshot 2024-09-28 223548](https://github.com/user-attachments/assets/e4175cea-a2e3-4e56-b378-f765c95011d2)
+
+![Screenshot 2024-09-28 224901](https://github.com/user-attachments/assets/220e24b5-4ce0-4d9b-9ab6-dd2853aa4a16)
+
+![Screenshot 2024-09-28 224939](https://github.com/user-attachments/assets/36f67a7d-6d97-43e0-99a4-c985a6ae1428)
+
+![Screenshot 2024-09-28 224820](https://github.com/user-attachments/assets/016c3b6c-c929-4f8a-b82b-91dd2de2d825)
+
+### Commands to load detailed route def file to magic tool
+
+#### Open the directory where routed def file contains
+###### cd /Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/28-09_16-46/results/routing/
+
+#### Command to load the routed def into magic
+###### magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.def &
+
+### Screenshots
+![Screenshot 2024-09-28 225512](https://github.com/user-attachments/assets/3c0fb775-24b7-45ac-9a05-39bed8c99189)
+
+![Screenshot 2024-09-28 225558](https://github.com/user-attachments/assets/71a57454-f27b-467c-9314-ebb995ad8c33)
+
+![Screenshot 2024-09-28 225840](https://github.com/user-attachments/assets/50178a7e-6a24-4a0f-9f8c-d46334322eff)
+
+![Screenshot 2024-09-28 225651](https://github.com/user-attachments/assets/1612f502-4373-4dbf-af4a-083c0c5feff8)
+
+#### 3. Post-Route parasitic extraction using SPEF extractor.
+
+#### Commands for SPEF extraction 
+
+#### directory
+###### cd /Desktop/work/tools/SPEF_EXTRACTOR
+
+#### Command to extract
+###### python3 main.py /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/28-09_16-46/tmp/merged.lef /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/28-09_16-46/results/routing/picorv32a.def
+
+### 4. Post-Route OpenSTA timing analysis with the extracted parasitics of the route.
+
+### Command to run OpenLANE_flow to do OpenROAD timing analysis with integrated OpenSTA in OpenROAD
+
+#### Command to run OpenROAD tool
+###### openroad
+
+#### Reading lef file
+###### read_lef /openLANE_flow/designs/picorv32a/runs/28-09_16-46/tmp/merged.lef
+
+#### Reading def file
+###### read_def /openLANE_flow/designs/picorv32a/runs/28-09_16-46/results/cts/picorv32a.cts.def
+
+#### Creating an openroad daatabase
+###### write_db pico_cts.db
+
+#### Loading the created database in OpenROAD
+###### read_db pico_cts.db
+
+#### Read netlist post CTS
+###### read_verilog /openLANE_flow/designs/picorv32a/runs/28-09_16-46/results/synthesis/picorv32s.synthesis_cts.v
+
+#### Read library for design
+###### read_liberty $::env(LIB_SYNTH_COMPLETE)
+
+#### Link design and library
+###### link_design picorv32a
+
+#### Read in the custom sdc we created
+###### read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+
+#### setting all clocks as propagated clocks
+###### set_propagated_clock [all_clock]
+
+#### Read SPEF
+###### read_spef /openLANE_flow/designs/picorv32a/runs/28-09_16-46/results/routing/picorv32a.spef
+
+#### Generating custom timing report
+###### report_checks -path_delay min_max -fields {slew trans net cap input_pins} -format full_clock_expanded -digits 4
+
+#### Exit to OpenLANE flow
+###### exit
+
+### Screenshots
+![Screenshot 2024-09-28 232002](https://github.com/user-attachments/assets/8021c351-bda1-4543-932a-31ad068d1c19)
+
+![Screenshot 2024-09-28 232034](https://github.com/user-attachments/assets/5695150b-a0a3-407b-9e1f-04fbe7a5dc35)
+
+![Screenshot 2024-09-28 232055](https://github.com/user-attachments/assets/81b8b65f-1a26-47be-9e96-3193396f0c73)
+
+![Screenshot 2024-09-28 232112](https://github.com/user-attachments/assets/344f0c1a-ed37-4752-9ed7-701ddd53a710)
+
+## Certificate
+
+
+## Acknowledgements
+
+### Kunal Ghosh, Co-founder, VSD Corp. Pvt. Ltd.
+### Nickson P Jose, Physical Design Engineer, Intel Corporation.
+### R. Timothy Edwards, Senior Vice President of Analog and Design, efabless Corporation.
